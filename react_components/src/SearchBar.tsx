@@ -1,25 +1,44 @@
 import React from 'react';
 
-class SearchBar extends React.Component {
-  constructor() {
-    super();
+interface SearchBarProps {}
+interface SearchBarState {
+  input: string;
+}
+
+class SearchBar extends React.Component<SearchBarProps, SearchBarState> {
+  constructor(props: SearchBarProps) {
+    super(props);
     this.state = {
-      name: '',
+      input: '',
     };
   }
-  handleNameChange = (event) => {
-    this.setState({ name: event.target.value });
-    console.log(this.state.name);
+  handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    this.setState({ input: event.target.value });
+    console.log(this.state.input);
   };
+
+  componentDidMount() {
+    const inputStorage = localStorage.getItem('inputValue');
+    if (inputStorage) {
+      this.setState({ input: inputStorage });
+    }
+  }
+
   componentWillUnmount(): void {
-    console.log('Unmount', this.state.name);
+    localStorage.setItem('inputValue', this.state.input);
   }
   render() {
     return (
       <div className="search_bar">
         <form>
-          <input type="text" onChange={this.handleNameChange} placeholder="Click here to search!" />
+          <input
+            type="text"
+            value={this.state.input}
+            onChange={this.handleInputChange}
+            placeholder="Click here to search!"
+          />
         </form>
+        <div>{this.state.input}</div>
       </div>
     );
   }
