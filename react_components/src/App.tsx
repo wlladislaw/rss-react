@@ -1,14 +1,18 @@
+import React from 'react';
 import './App.scss';
-import Card from './Card';
+
+import Cards from './Cards';
 import SearchBar from './SearchBar';
 
-function App() {
-  return (
-    <div className="App">
-      <SearchBar />
-      <Card />
-    </div>
-  );
+class App extends React.Component {
+  render() {
+    return (
+      <div className="App">
+        <SearchBar prop={''} />
+        <Cards />
+      </div>
+    );
+  }
 }
 
 export default App;

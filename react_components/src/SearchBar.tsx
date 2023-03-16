@@ -1,6 +1,8 @@
 import React from 'react';
 
-interface SearchBarProps {}
+interface SearchBarProps {
+  prop: string;
+}
 interface SearchBarState {
   input: string;
 }
