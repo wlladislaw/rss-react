@@ -23,7 +23,7 @@ class Card extends React.Component<Data> {
   render() {
     const { card } = this.props;
     return (
-      <div className="card">
+      <div data-testid="list-item" className="card">
         <p className="title_card">{card.title}</p>
         <div className="card_info">
           <img src={card.thumbnail} className="card_image" alt="image" />

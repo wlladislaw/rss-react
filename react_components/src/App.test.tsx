@@ -1,15 +1,18 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { MemoryRouter } from 'react-router-dom';
 
 import App from './App';
 import NavBar from './NavBar';
 
 describe('App', () => {
-  it('has input with placeholder', () => {
-    render(<App />);
-    expect(screen.getByRole('textbox')).toBeInTheDocument();
-    expect(screen.getByPlaceholderText(/search/i)).toBeInTheDocument();
-    expect(screen.getByDisplayValue('')).toBeInTheDocument();
+  it('Renders 404, if invalid path', () => {
+    render(
+      <MemoryRouter initialEntries={['/lalala']}>
+        <App />
+      </MemoryRouter>
+    );
+    expect(screen.getByText('Oops, 404')).toBeInTheDocument();
   });
 });
 

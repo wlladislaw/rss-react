@@ -1,23 +1,31 @@
 import React from 'react';
 import './index.scss';
-import { Routes, Route, BrowserRouter } from 'react-router-dom';
-import Error from './Error';
+import { Routes, Route, BrowserRouter, HashRouter } from 'react-router-dom';
+import NotFound from './NotFound';
 import AboutUs from './AboutUs';
 import NavBar from './NavBar';
 import MainPage from './MainPage';
 class App extends React.Component {
   render() {
     return (
-      <BrowserRouter>
+      <>
         <NavBar />
         <Routes>
           <Route path="/about_us" element={<AboutUs />} />
           <Route path="/" element={<MainPage />} />
-          <Route path="*" element={<Error />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
-      </BrowserRouter>
+      </>
     );
   }
 }
+
+// export function WrappedApp() {
+//   return (
+//     <HashRouter>
+//       <App />
+//     </HashRouter>
+//   );
+// }
 
 export default App;

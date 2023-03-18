@@ -6,6 +6,12 @@ describe('SearchBar', () => {
     render(<SearchBar prop={''} />);
     expect(screen.getByPlaceholderText(/search/i)).toBeEmptyDOMElement();
   });
+  it('has input with placeholder', () => {
+    render(<SearchBar prop={''} />);
+    expect(screen.getByRole('textbox')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText(/search/i)).toBeInTheDocument();
+    expect(screen.getByDisplayValue('')).toBeInTheDocument();
+  });
 
   it('check input', () => {
     render(<SearchBar prop={''} />);
