@@ -7,7 +7,6 @@ import NavBar from './NavBar';
 describe('App', () => {
   it('has input with placeholder', () => {
     render(<App />);
-    screen.debug();
     expect(screen.getByRole('textbox')).toBeInTheDocument();
     expect(screen.getByPlaceholderText(/search/i)).toBeInTheDocument();
     expect(screen.getByDisplayValue('')).toBeInTheDocument();

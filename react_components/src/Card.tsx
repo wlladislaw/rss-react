@@ -26,7 +26,7 @@ class Card extends React.Component<Data> {
       <div className="card">
         <p className="title_card">{card.title}</p>
         <div className="card_info">
-          <img src={card.thumbnail} className="card_image" alt={'image'} />
+          <img src={card.thumbnail} className="card_image" alt="image" />
           <ul className="description_card">
             <li>
               <b>{`rating: ${card.rating}`}</b>
