@@ -1,8 +1,12 @@
-
-
 form {
   width: 400px;
   margin: auto;
+  display: flex;
+  align-items: center;
+
+  button {
+    color: aliceblue;
+  }
 
   input {
     margin: 20px;

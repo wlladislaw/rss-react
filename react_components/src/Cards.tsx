@@ -21,11 +21,26 @@ class Cards extends React.Component {
   state = {
     data: data,
   };
+
+  componentDidMount() {
+    const inputStorage = localStorage.getItem('inputValue');
+
+    const filtered = data.filter((el) => {
+      if (inputStorage !== null)
+        return (
+          el.title.toLowerCase().includes(inputStorage.toLowerCase()) ||
+          el.description.toLowerCase().includes(inputStorage.toLowerCase()) ||
+          el.price == +inputStorage ||
+          el.category.toLowerCase().includes(inputStorage.toLowerCase())
+        );
+    });
+    this.setState({ data: filtered });
+  }
+
   render() {
-    const { data } = this.state;
     return (
       <div className="cards_container">
-        {data.map((el) => (
+        {this.state.data.map((el) => (
           <Card key={el.id} card={el} />
         ))}
       </div>

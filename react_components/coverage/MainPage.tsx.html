@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for App.tsx</title>
+    <title>Code coverage report for MainPage.tsx</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="prettify.css" />
     <link rel="stylesheet" href="base.css" />
@@ -19,13 +19,13 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="index.html">All files</a> App.tsx</h1>
+        <h1><a href="index.html">All files</a> MainPage.tsx</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>23/23</span>
+                <span class='fraction'>18/18</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>23/23</span>
+                <span class='fraction'>18/18</span>
             </div>
         
             
@@ -81,17 +81,7 @@
 <a name='L16'></a><a href='#L16'>16</a>
 <a name='L17'></a><a href='#L17'>17</a>
 <a name='L18'></a><a href='#L18'>18</a>
-<a name='L19'></a><a href='#L19'>19</a>
-<a name='L20'></a><a href='#L20'>20</a>
-<a name='L21'></a><a href='#L21'>21</a>
-<a name='L22'></a><a href='#L22'>22</a>
-<a name='L23'></a><a href='#L23'>23</a>
-<a name='L24'></a><a href='#L24'>24</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<a name='L19'></a><a href='#L19'>19</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -110,28 +100,23 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React from 'react';
-import './index.scss';
-import { Routes, Route, BrowserRouter } from 'react-router-dom';
-import Error from './Error';
-import AboutUs from './AboutUs';
-import NavBar from './NavBar';
-import MainPage from './MainPage';
-class App extends React.Component {
+import './App.scss';
+&nbsp;
+import Cards from './Cards';
+import SearchBar from './SearchBar';
+&nbsp;
+class MainPage extends React.Component {
   render() {
     return (
-      &lt;BrowserRouter&gt;
-        &lt;NavBar /&gt;
-        &lt;Routes&gt;
-          &lt;Route path="/about_us" element={&lt;AboutUs /&gt;} /&gt;
-          &lt;Route path="/" element={&lt;MainPage /&gt;} /&gt;
-          &lt;Route path="*" element={&lt;Error /&gt;} /&gt;
-        &lt;/Routes&gt;
-      &lt;/BrowserRouter&gt;
+      &lt;div className="App"&gt;
+        &lt;SearchBar prop={''} /&gt;
+        &lt;Cards /&gt;
+      &lt;/div&gt;
     );
   }
 }
 &nbsp;
-export default App;
+export default MainPage;
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
