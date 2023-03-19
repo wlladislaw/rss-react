@@ -1,3 +1,3 @@
 # rss-react
 ## npm i 
-### npm dev or npm test 
+### npm run dev or npm run test 
