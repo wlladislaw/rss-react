@@ -1,5 +1,4 @@
 import React from 'react';
-
 interface Data {
   card: {
     id: number;
@@ -15,7 +14,6 @@ interface Data {
     images: string[];
   };
 }
-
 class Card extends React.Component<Data> {
   render() {
     const { card } = this.props;

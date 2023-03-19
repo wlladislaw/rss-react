@@ -2,7 +2,6 @@ import React from 'react';
 import Card from './Card';
 import './cards.scss';
 import { data } from './data';
-
 class Cards extends React.Component {
   state = {
     data: data,
