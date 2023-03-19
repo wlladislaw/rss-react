@@ -1,6 +1,6 @@
 import React from 'react';
 import './index.scss';
-import { Routes, Route, BrowserRouter, HashRouter } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import NotFound from './NotFound';
 import AboutUs from './AboutUs';
 import NavBar from './NavBar';
@@ -19,13 +19,5 @@ class App extends React.Component {
     );
   }
 }
-
-// export function WrappedApp() {
-//   return (
-//     <HashRouter>
-//       <App />
-//     </HashRouter>
-//   );
-// }
 
 export default App;

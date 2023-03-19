@@ -16,14 +16,11 @@ interface Data {
   };
 }
 
-// interface CardsProps {
-//   data: Data[];
-// }
 class Card extends React.Component<Data> {
   render() {
     const { card } = this.props;
     return (
-      <div data-testid="list-item" className="card">
+      <div className="card">
         <p className="title_card">{card.title}</p>
         <div className="card_info">
           <img src={card.thumbnail} className="card_image" alt="image" />
@@ -41,9 +38,7 @@ class Card extends React.Component<Data> {
               <b>{` ${card.price} $`}</b>
             </li>
             <li>
-              <a href="#!" className="card_more">
-                SEE MORE
-              </a>
+              <span className="card_more">SEE MORE</span>
             </li>
           </ul>
         </div>

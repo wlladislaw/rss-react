@@ -3,20 +3,6 @@ import Card from './Card';
 import './cards.scss';
 import { data } from './data';
 
-// interface Data {
-//   id: number;
-//   title: string;
-//   description: string;
-//   price: number;
-//   discountPercentage: number;
-//   rating: number;
-//   stock: number;
-//   brand: string;
-//   category: string;
-//   thumbnail: string;
-//   images: string[];
-// }
-
 class Cards extends React.Component {
   state = {
     data: data,
@@ -39,7 +25,7 @@ class Cards extends React.Component {
 
   render() {
     return (
-      <div className="cards_container">
+      <div data-testid="list" className="cards_container">
         {this.state.data.map((el) => (
           <Card key={el.id} card={el} />
         ))}
