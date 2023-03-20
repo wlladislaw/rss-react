@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import SearchBar from './SearchBar';
+import SearchBar from '../components/SearchBar/SearchBar';
 
 describe('SearchBar', () => {
   it('has empty input', () => {
