@@ -5,12 +5,14 @@ import AboutUs from '../About/AboutUs';
 import NavBar from '../NavBar/NavBar';
 import MainPage from '../MainPaige/MainPage';
 import './App.scss';
+import FormsList from '../FormsList/FormsList';
 class App extends React.Component {
   render() {
     return (
       <>
         <NavBar />
         <Routes>
+          <Route path="/forms" element={<FormsList />} />
           <Route path="/about_us" element={<AboutUs />} />
           <Route path="/" element={<MainPage />} />
           <Route path="*" element={<NotFound />} />
