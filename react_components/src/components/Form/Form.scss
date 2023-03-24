@@ -7,7 +7,7 @@
   border-radius: 3px;
 
   .form_info {
-    background-color:silver;
+    background-color: silver;
     color: rgb(6, 0, 12);
   }
 
@@ -33,7 +33,10 @@
   flex-wrap: wrap;
 
   .info_card-item {
-    width: 400px;
+    padding: 10px;
+    margin: 20px;
+    border: #f1f1f1 solid 2px;
+    width: 300px;
   }
 
 }

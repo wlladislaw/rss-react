@@ -1,38 +1,96 @@
-import React from 'react';
+import React, { Component, FormEvent, RefObject } from 'react';
 import './Form.scss';
 
-class Form extends React.Component<{}, {}> {
-  constructor(props) {
+interface FormState {
+  forms: Forms[];
+  isSubmited: boolean;
+}
+
+interface Forms {
+  name: string;
+  phone: string;
+  date: string;
+  select: string;
+  checkbox: boolean;
+  file: string;
+}
+
+class Form extends Component<object, FormState> {
+  private nameInput: RefObject<HTMLInputElement>;
+  private phoneInput: RefObject<HTMLInputElement>;
+  private dateInput: RefObject<HTMLInputElement>;
+  private selectInput: RefObject<HTMLSelectElement>;
+  private checkboxInput: RefObject<HTMLInputElement>;
+  private fileInput: RefObject<HTMLInputElement>;
+
+  constructor(props: object) {
     super(props);
+
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.nameInput = React.createRef();
-    this.phoneInput = React.createRef();
-    this.dateInput = React.createRef();
+    // this.formElement = React.createRef<HTMLFormElement>();
+    this.nameInput = React.createRef<HTMLInputElement>();
+    this.phoneInput = React.createRef<HTMLInputElement>();
+    this.dateInput = React.createRef<HTMLInputElement>();
+    this.selectInput = React.createRef<HTMLSelectElement>();
+    this.checkboxInput = React.createRef<HTMLInputElement>();
+    // this.dateInput = React.createRef<HTMLInputElement>();
+    this.fileInput = React.createRef<HTMLInputElement>();
 
     this.state = {
       forms: [],
+      isSubmited: false,
     };
   }
 
-  handleSubmit(event) {
+  handleSubmit(event: FormEvent<HTMLFormElement>): void {
     event.preventDefault();
 
-    const newForm = {
-      name: this.nameInput.current.value,
-      phone: this.phoneInput.current.value,
-      date: this.dateInput.current.value,
+    const newForm: Forms = {
+      name: this.nameInput.current!.value,
+      phone: this.phoneInput.current!.value,
+      date: this.dateInput.current!.value,
+      select: this.selectInput.current!.value,
+      checkbox: this.checkboxInput.current!.checked,
+      // this.dateInput = React.createRef<HTMLInputElement>();
+      file: this.fileInput.current!.value,
     };
+
     this.setState((prevState) => ({
       forms: [...prevState.forms, newForm],
+      isSubmited: true,
     }));
-    this.nameInput.current.value = '';
-    this.phoneInput.current.value = '';
-    this.dateInput.current.value = '';
+
+    // this.nameInput.current!.value = '';
+    // this.phoneInput.current!.value = '';
+    // this.dateInput.current!.value = '';
+    // this.selectInput.current!.value = '';
+    // this.phoneInput = React.createRef<HTMLInputElement>();
+    // this.dateInput = React.createRef<HTMLInputElement>();
+    // this.nameInput = React.createRef<HTMLInputElement>();
+
+    event.currentTarget.reset();
+
+    setTimeout(() => {
+      this.setState({
+        isSubmited: false,
+      });
+    }, 3500);
   }
+
+  // componentDidUpdate(prevProps, prevState) {
+  //   if (prevState.forms !== this.state.forms) {
+  //     alert('Thanks for order!');
+  //   }
+  // }
 
   render() {
     return (
-      <React.Fragment>
+      <>
+        {this.state.isSubmited && (
+          <div className="confirmation_message">
+            <h2>Data has been saved! Thanks for order!</h2>
+          </div>
+        )}
         <form onSubmit={this.handleSubmit}>
           <div className="form_container">
             <div className="form_info">
@@ -58,22 +116,14 @@ class Form extends React.Component<{}, {}> {
                 placeholder="+***..."
                 required
               />
-              {/*
-              <input
-                id="email"
-                ref={(inp) => (this._emailInput = inp)}
-                name="email"
-                type="email"
-                placeholder="email@gmail.com"
-              /> */}
               <br />
               <label>
                 Date of birthday
-                <input type="date" ref={this.dateInput} value="1960-01-01" />
+                <input type="date" ref={this.dateInput} defaultValue="1960-01-01" />
               </label>
               <br />
               <label htmlFor="payment">Choose a payment method:</label>
-              <select name="payment">
+              <select ref={this.selectInput} name="payment">
                 <option value="cash">Cash</option>
                 <option value="online">Online</option>
                 <option value="crypto">Crypto</option>
@@ -81,23 +131,19 @@ class Form extends React.Component<{}, {}> {
               <br />
               <label>
                 Delivery:
-                <input type="checkbox" />
+                <input type="checkbox" ref={this.checkboxInput} />
               </label>
 
               <div className="switch_field">
-                <span>Gendre:</span>
+                <span>Gender:</span>
                 <input type="radio" name="switch-one" value="male" checked />
-                <label htmlFor="radio-one">male</label>
+                <label htmlFor="radio-one">Male</label>
                 <input type="radio" name="switch-one" value="female" />
-                <label htmlFor="radio-two">female</label>
+                <label htmlFor="radio-two">Female</label>
               </div>
-              {/* <label className="file_upload">
-                <span>Upload files</span>
-                <input type="file" name="file" />
-              </label> */}
               <div id="file_upload-container">
                 <label>
-                  <input type="file" name="file" id="uploade_file" />
+                  <input type="file" name="file" ref={this.fileInput} id="upload_file" />
                   <span>Upload file</span>
                 </label>
               </div>
@@ -107,15 +153,18 @@ class Form extends React.Component<{}, {}> {
           </div>
         </form>
         <div className="info_cards">
-          {this.state.forms.map((el) => (
-            <div className="info_card-item" key={el.phone}>
-              <h1>{el.name}</h1>
-              <h1>{el.phone}</h1>
-              <h1>{el.date}</h1>
+          {this.state.forms.map((el, index) => (
+            <div className="info_card-item" key={index}>
+              <p>{el.name}</p>
+              <p>{el.phone}</p>
+              <p>{el.date}</p>
+              <p>{el.select}</p>
+              <p>{el.checkbox ? 'need delevery' : 'without delivery'}</p>
+              <p>{el.file}</p>
             </div>
           ))}
         </div>
-      </React.Fragment>
+      </>
     );
   }
 }
