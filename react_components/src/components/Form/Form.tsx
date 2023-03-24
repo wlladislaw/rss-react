@@ -17,13 +17,13 @@ class Form extends React.Component<{}, {}> {
   handleSubmit(event) {
     event.preventDefault();
 
-    const neewForm = {
+    const newForm = {
       name: this.nameInput.current.value,
       phone: this.phoneInput.current.value,
       date: this.dateInput.current.value,
     };
     this.setState((prevState) => ({
-      forms: [...prevState.forms, neewForm],
+      forms: [...prevState.forms, newForm],
     }));
     this.nameInput.current.value = '';
     this.phoneInput.current.value = '';
@@ -37,62 +37,84 @@ class Form extends React.Component<{}, {}> {
           <div className="form_container">
             <div className="form_info">
               <h3>Information</h3>
-
               <label>
                 Your name
-                <input id="name" ref={this.nameInput} name="name" type="text" placeholder="Name" />
+                <input
+                  id="name"
+                  ref={this.nameInput}
+                  name="name"
+                  type="text"
+                  placeholder="Name"
+                  required
+                />
               </label>
 
-              <label htmlFor="phone">Your phone</label>
+              <label htmlFor="phone">Phone</label>
               <input
                 id="phone"
                 ref={this.phoneInput}
                 name="phone"
                 type="text"
-                placeholder="+*********"
+                placeholder="+***..."
+                required
               />
-
+              {/*
               <input
                 id="email"
                 ref={(inp) => (this._emailInput = inp)}
                 name="email"
                 type="email"
                 placeholder="email@gmail.com"
-              />
-
+              /> */}
+              <br />
               <label>
-                date of birthday
-                <input type="date" ref={this.dateInput} />
+                Date of birthday
+                <input type="date" ref={this.dateInput} value="1960-01-01" />
               </label>
-
-              <label htmlFor="cars">Choose a car:</label>
-              <select name="cars" id="cars">
-                <option value="volvo">Volvo</option>
-                <option value="saab">Saab</option>
-                <option value="audi">Audi</option>
+              <br />
+              <label htmlFor="payment">Choose a payment method:</label>
+              <select name="payment">
+                <option value="cash">Cash</option>
+                <option value="online">Online</option>
+                <option value="crypto">Crypto</option>
               </select>
-
+              <br />
               <label>
-                automatic
+                Delivery:
                 <input type="checkbox" />
               </label>
 
-              <h3>male/female ?</h3>
               <div className="switch_field">
-                <input type="radio" id="radio-one" name="switch-one" value="yes" checked />
-                <label htmlFor="radio-one">Yes</label>
-                <input type="radio" id="radio-two" name="switch-one" value="no" />
-                <label htmlFor="radio-two">No</label>
+                <span>Gendre:</span>
+                <input type="radio" name="switch-one" value="male" checked />
+                <label htmlFor="radio-one">male</label>
+                <input type="radio" name="switch-one" value="female" />
+                <label htmlFor="radio-two">female</label>
+              </div>
+              {/* <label className="file_upload">
+                <span>Upload files</span>
+                <input type="file" name="file" />
+              </label> */}
+              <div id="file_upload-container">
+                <label>
+                  <input type="file" name="file" id="uploade_file" />
+                  <span>Upload file</span>
+                </label>
               </div>
 
-              <input type="file" />
-
-              <button className="form_btn">Submit</button>
+              <button className="form_btn">Save</button>
             </div>
           </div>
         </form>
-        <h1>{this.state.forms[0]?.name}</h1>
-        <h1>{this.state.forms[1]?.name}</h1>
+        <div className="info_cards">
+          {this.state.forms.map((el) => (
+            <div className="info_card-item" key={el.phone}>
+              <h1>{el.name}</h1>
+              <h1>{el.phone}</h1>
+              <h1>{el.date}</h1>
+            </div>
+          ))}
+        </div>
       </React.Fragment>
     );
   }
