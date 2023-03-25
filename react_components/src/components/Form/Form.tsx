@@ -12,6 +12,7 @@ interface Forms {
   date: string;
   select: string;
   checkbox: boolean;
+  gender: string;
   file: string;
 }
 
@@ -21,6 +22,7 @@ class Form extends Component<object, FormState> {
   private dateInput: RefObject<HTMLInputElement>;
   private selectInput: RefObject<HTMLSelectElement>;
   private checkboxInput: RefObject<HTMLInputElement>;
+  private radioRefMale: RefObject<HTMLInputElement>;
   private fileInput: RefObject<HTMLInputElement>;
 
   constructor(props: object) {
@@ -33,7 +35,8 @@ class Form extends Component<object, FormState> {
     this.dateInput = React.createRef<HTMLInputElement>();
     this.selectInput = React.createRef<HTMLSelectElement>();
     this.checkboxInput = React.createRef<HTMLInputElement>();
-    // this.dateInput = React.createRef<HTMLInputElement>();
+    this.radioRefMale = React.createRef<HTMLInputElement>();
+    //this.femaleInput = React.createRef<HTMLInputElement>();
     this.fileInput = React.createRef<HTMLInputElement>();
 
     this.state = {
@@ -44,29 +47,20 @@ class Form extends Component<object, FormState> {
 
   handleSubmit(event: FormEvent<HTMLFormElement>): void {
     event.preventDefault();
-
+    const selectedRadio = this.radioRefMale.current!.checked ? 'male' : 'female';
     const newForm: Forms = {
       name: this.nameInput.current!.value,
       phone: this.phoneInput.current!.value,
       date: this.dateInput.current!.value,
       select: this.selectInput.current!.value,
       checkbox: this.checkboxInput.current!.checked,
-      // this.dateInput = React.createRef<HTMLInputElement>();
+      gender: selectedRadio,
       file: this.fileInput.current!.value,
     };
-
     this.setState((prevState) => ({
       forms: [...prevState.forms, newForm],
       isSubmited: true,
     }));
-
-    // this.nameInput.current!.value = '';
-    // this.phoneInput.current!.value = '';
-    // this.dateInput.current!.value = '';
-    // this.selectInput.current!.value = '';
-    // this.phoneInput = React.createRef<HTMLInputElement>();
-    // this.dateInput = React.createRef<HTMLInputElement>();
-    // this.nameInput = React.createRef<HTMLInputElement>();
 
     event.currentTarget.reset();
 
@@ -76,12 +70,6 @@ class Form extends Component<object, FormState> {
       });
     }, 3500);
   }
-
-  // componentDidUpdate(prevProps, prevState) {
-  //   if (prevState.forms !== this.state.forms) {
-  //     alert('Thanks for order!');
-  //   }
-  // }
 
   render() {
     return (
@@ -119,7 +107,7 @@ class Form extends Component<object, FormState> {
               <br />
               <label>
                 Date of birthday
-                <input type="date" ref={this.dateInput} defaultValue="1960-01-01" />
+                <input type="date" ref={this.dateInput} defaultValue="1990-01-01" />
               </label>
               <br />
               <label htmlFor="payment">Choose a payment method:</label>
@@ -136,15 +124,21 @@ class Form extends Component<object, FormState> {
 
               <div className="switch_field">
                 <span>Gender:</span>
-                <input type="radio" name="switch-one" value="male" checked />
+                <input
+                  type="radio"
+                  ref={this.radioRefMale}
+                  name="switch"
+                  value="male"
+                  defaultChecked
+                />
                 <label htmlFor="radio-one">Male</label>
-                <input type="radio" name="switch-one" value="female" />
+                <input type="radio" name="switch" value="female" />
                 <label htmlFor="radio-two">Female</label>
               </div>
               <div id="file_upload-container">
                 <label>
                   <input type="file" name="file" ref={this.fileInput} id="upload_file" />
-                  <span>Upload file</span>
+                  <span>Upload avatar</span>
                 </label>
               </div>
 
@@ -159,7 +153,8 @@ class Form extends Component<object, FormState> {
               <p>{el.phone}</p>
               <p>{el.date}</p>
               <p>{el.select}</p>
-              <p>{el.checkbox ? 'need delevery' : 'without delivery'}</p>
+              <p>{el.checkbox ? 'need delivery' : 'without delivery'}</p>
+              <p>{el.gender}</p>
               <p>{el.file}</p>
             </div>
           ))}

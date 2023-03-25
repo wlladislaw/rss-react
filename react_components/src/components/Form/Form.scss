@@ -3,18 +3,18 @@
   margin: 0 auto;
   max-width: 500px;
   padding: 12px;
-  background-color: #fff;
+  background-color: #f7f7f7;
   border-radius: 3px;
 
   .form_info {
-    background-color: silver;
+    background-color: rgb(243, 235, 235);
     color: rgb(6, 0, 12);
   }
 
   input[type=text],
   input[type=email],
   :focus {
-    background-color: rgb(208, 220, 224);
+    background-color: rgb(250, 245, 245);
   }
 
   select {
