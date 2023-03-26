@@ -3,7 +3,7 @@ import Form from '../components/Form/Form';
 
 test('submit form correctly', () => {
   render(<Form />);
-  const nameInput = screen.getByPlaceholderText('Name');
+  const nameInput = screen.getByPlaceholderText('Name and Last name');
   const phoneInput = screen.getByPlaceholderText('+*********');
   const dateInput = screen.getByLabelText('Date of birthday');
   const checkboxInput = screen.getByLabelText('Delivery');
@@ -24,7 +24,7 @@ test('submit form correctly', () => {
 
 test('invalid name value', () => {
   render(<Form />);
-  const nameInput = screen.getByPlaceholderText('Name');
+  const nameInput = screen.getByPlaceholderText('Name and Last name');
   const submitButton = screen.getByRole('button');
   fireEvent.change(nameInput, { target: { value: 'lev' } });
   fireEvent.click(submitButton);

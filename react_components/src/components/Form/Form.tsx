@@ -40,7 +40,7 @@ class Form extends Component<object, FormState> {
       const minNameLength = 2;
       const maxNameLength = 42;
       isValidName = name.length >= minNameLength && name.length <= maxNameLength;
-      const onlyLettersRegex = /^[a-zA-Z]+$/;
+      const onlyLettersRegex = /^\s*[a-z-а-яё]+(?:\s+[a-z-а-яё]+){1,2}\s*$/i;
       if (name.charAt(0) !== name.charAt(0).toUpperCase() || !onlyLettersRegex.test(name)) {
         isValidName = false;
         this.setState({
@@ -50,11 +50,11 @@ class Form extends Component<object, FormState> {
       const phoneRegex =
         /(\+)[- _]*\(?[- _]*(\d{3}[- _]*\)?([- _]*\d){7}|\d\d[- _]*\d\d[- _]*\)?([- _]*\d){6})/g;
       const isValidPhone = phoneRegex.test(phone);
-      if (!isValidPhone) {
-        this.setState({
-          isValidPhone: false,
-        });
-      }
+
+      this.setState({
+        isValidPhone: isValidPhone,
+      });
+
       return isValidName && isValidPhone;
     };
 
@@ -111,7 +111,7 @@ class Form extends Component<object, FormState> {
                   ref={this.nameInput}
                   name="name"
                   type="text"
-                  placeholder="Name"
+                  placeholder="Name and Last name"
                   required
                 />
               </label>
