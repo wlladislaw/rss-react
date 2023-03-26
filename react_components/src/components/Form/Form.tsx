@@ -4,6 +4,8 @@ import './Form.scss';
 interface FormState {
   forms: Forms[];
   isSubmited: boolean;
+  isValidPhone: boolean;
+  isValidName: boolean;
 }
 
 interface Forms {
@@ -15,6 +17,17 @@ interface Forms {
   gender: string;
   file: string;
 }
+
+const validate = (name: string) => {
+  const onlyLettersRegex = /^[a-zA-Z]+$/;
+  if (name.charAt(0) !== name.charAt(0).toUpperCase() || !onlyLettersRegex.test(name)) {
+    return false;
+  }
+  const minNameLength = 2;
+  const maxNameLength = 42;
+  const isValidName = name.length >= minNameLength && name.length <= maxNameLength;
+  return isValidName;
+};
 
 class Form extends Component<object, FormState> {
   private nameInput: RefObject<HTMLInputElement>;
@@ -29,28 +42,52 @@ class Form extends Component<object, FormState> {
     super(props);
 
     this.handleSubmit = this.handleSubmit.bind(this);
-    // this.formElement = React.createRef<HTMLFormElement>();
     this.nameInput = React.createRef<HTMLInputElement>();
     this.phoneInput = React.createRef<HTMLInputElement>();
     this.dateInput = React.createRef<HTMLInputElement>();
     this.selectInput = React.createRef<HTMLSelectElement>();
     this.checkboxInput = React.createRef<HTMLInputElement>();
     this.radioRefMale = React.createRef<HTMLInputElement>();
-    //this.femaleInput = React.createRef<HTMLInputElement>();
     this.fileInput = React.createRef<HTMLInputElement>();
 
     this.state = {
       forms: [],
       isSubmited: false,
+      isValidPhone: true,
+      isValidName: true,
     };
   }
 
-  handleSubmit(event: FormEvent<HTMLFormElement>): void {
+  handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const nameInputValue = this.nameInput.current!.value;
+    if (!validate(nameInputValue)) {
+      this.setState({
+        isValidName: false,
+      });
+    } else {
+      this.setState({
+        isValidName: true,
+      });
+    }
+
+    const phoneInputValue = this.phoneInput.current!.value;
+    const phoneRegex =
+      /(\+)[- _]*\(?[- _]*(\d{3}[- _]*\)?([- _]*\d){7}|\d\d[- _]*\d\d[- _]*\)?([- _]*\d){6})/g;
+    const isValidPhone = phoneRegex.test(phoneInputValue);
+
+    if (!isValidPhone) {
+      this.setState({
+        isValidPhone: false,
+      });
+      return null;
+    }
+    console.log('work!');
+
     const selectedRadio = this.radioRefMale.current!.checked ? 'male' : 'female';
     const newForm: Forms = {
-      name: this.nameInput.current!.value,
-      phone: this.phoneInput.current!.value,
+      name: nameInputValue,
+      phone: phoneInputValue,
       date: this.dateInput.current!.value,
       select: this.selectInput.current!.value,
       checkbox: this.checkboxInput.current!.checked,
@@ -60,6 +97,8 @@ class Form extends Component<object, FormState> {
     this.setState((prevState) => ({
       forms: [...prevState.forms, newForm],
       isSubmited: true,
+      isValidPhone: true,
+      isValidName: true,
     }));
 
     event.currentTarget.reset();
@@ -72,6 +111,7 @@ class Form extends Component<object, FormState> {
   }
 
   render() {
+    const { isValidPhone, isValidName } = this.state;
     return (
       <>
         {this.state.isSubmited && (
@@ -94,6 +134,7 @@ class Form extends Component<object, FormState> {
                   required
                 />
               </label>
+              <p style={{ color: 'red', margin: 0 }}>{!isValidName ? 'Invalid value' : null}</p>
 
               <label htmlFor="phone">Phone</label>
               <input
@@ -101,16 +142,23 @@ class Form extends Component<object, FormState> {
                 ref={this.phoneInput}
                 name="phone"
                 type="text"
-                placeholder="+***..."
+                placeholder="+*********"
                 required
               />
+              <p style={{ color: 'red', margin: 0 }}>{!isValidPhone ? 'Invalid value' : null}</p>
               <br />
               <label>
                 Date of birthday
-                <input type="date" ref={this.dateInput} defaultValue="1990-01-01" />
+                <input
+                  type="date"
+                  ref={this.dateInput}
+                  defaultValue="1990-01-01"
+                  max={new Date().toISOString().split('T')[0]}
+                  min="1900-01-01"
+                />
               </label>
               <br />
-              <label htmlFor="payment">Choose a payment method:</label>
+              <label htmlFor="payment">Choose a payment method </label>
               <select ref={this.selectInput} name="payment">
                 <option value="cash">Cash</option>
                 <option value="online">Online</option>
@@ -118,12 +166,12 @@ class Form extends Component<object, FormState> {
               </select>
               <br />
               <label>
-                Delivery:
+                Delivery
                 <input type="checkbox" ref={this.checkboxInput} />
               </label>
 
               <div className="switch_field">
-                <span>Gender:</span>
+                <span>Gender</span>
                 <input
                   type="radio"
                   ref={this.radioRefMale}
@@ -137,7 +185,13 @@ class Form extends Component<object, FormState> {
               </div>
               <div id="file_upload-container">
                 <label>
-                  <input type="file" name="file" ref={this.fileInput} id="upload_file" />
+                  <input
+                    type="file"
+                    name="file"
+                    ref={this.fileInput}
+                    id="upload_file"
+                    accept="image/*"
+                  />
                   <span>Upload avatar</span>
                 </label>
               </div>
@@ -149,13 +203,13 @@ class Form extends Component<object, FormState> {
         <div className="info_cards">
           {this.state.forms.map((el, index) => (
             <div className="info_card-item" key={index}>
-              <p>{el.name}</p>
-              <p>{el.phone}</p>
-              <p>{el.date}</p>
-              <p>{el.select}</p>
-              <p>{el.checkbox ? 'need delivery' : 'without delivery'}</p>
-              <p>{el.gender}</p>
-              <p>{el.file}</p>
+              <p>Name: {el.name}</p>
+              <p>Phone: {el.phone}</p>
+              <p>Birthday: {el.date}</p>
+              <p>Payment method: {el.select}</p>
+              <p>Delivery: {el.checkbox ? 'need delivery' : 'without delivery'}</p>
+              <p>Gender: {el.gender}</p>
+              <p>Ava: {el.file}</p>
             </div>
           ))}
         </div>
