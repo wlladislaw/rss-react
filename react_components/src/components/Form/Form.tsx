@@ -1,33 +1,7 @@
 import React, { Component, FormEvent, RefObject } from 'react';
+import { Forms, FormState } from '../../types';
+import FormsList from '../FormsList/FormsList';
 import './Form.scss';
-
-interface FormState {
-  forms: Forms[];
-  isSubmited: boolean;
-  isValidPhone: boolean;
-  isValidName: boolean;
-}
-
-interface Forms {
-  name: string;
-  phone: string;
-  date: string;
-  select: string;
-  checkbox: boolean;
-  gender: string;
-  file: string;
-}
-
-const validate = (name: string) => {
-  const onlyLettersRegex = /^[a-zA-Z]+$/;
-  if (name.charAt(0) !== name.charAt(0).toUpperCase() || !onlyLettersRegex.test(name)) {
-    return false;
-  }
-  const minNameLength = 2;
-  const maxNameLength = 42;
-  const isValidName = name.length >= minNameLength && name.length <= maxNameLength;
-  return isValidName;
-};
 
 class Form extends Component<object, FormState> {
   private nameInput: RefObject<HTMLInputElement>;
@@ -60,29 +34,36 @@ class Form extends Component<object, FormState> {
 
   handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+
+    const validate = (name: string, phone: string) => {
+      let isValidName;
+      const minNameLength = 2;
+      const maxNameLength = 42;
+      isValidName = name.length >= minNameLength && name.length <= maxNameLength;
+      const onlyLettersRegex = /^[a-zA-Z]+$/;
+      if (name.charAt(0) !== name.charAt(0).toUpperCase() || !onlyLettersRegex.test(name)) {
+        isValidName = false;
+        this.setState({
+          isValidName: false,
+        });
+      }
+      const phoneRegex =
+        /(\+)[- _]*\(?[- _]*(\d{3}[- _]*\)?([- _]*\d){7}|\d\d[- _]*\d\d[- _]*\)?([- _]*\d){6})/g;
+      const isValidPhone = phoneRegex.test(phone);
+      if (!isValidPhone) {
+        this.setState({
+          isValidPhone: false,
+        });
+      }
+      return isValidName && isValidPhone;
+    };
+
     const nameInputValue = this.nameInput.current!.value;
-    if (!validate(nameInputValue)) {
-      this.setState({
-        isValidName: false,
-      });
-    } else {
-      this.setState({
-        isValidName: true,
-      });
-    }
-
     const phoneInputValue = this.phoneInput.current!.value;
-    const phoneRegex =
-      /(\+)[- _]*\(?[- _]*(\d{3}[- _]*\)?([- _]*\d){7}|\d\d[- _]*\d\d[- _]*\)?([- _]*\d){6})/g;
-    const isValidPhone = phoneRegex.test(phoneInputValue);
 
-    if (!isValidPhone) {
-      this.setState({
-        isValidPhone: false,
-      });
+    if (!validate(nameInputValue, phoneInputValue)) {
       return null;
     }
-    console.log('work!');
 
     const selectedRadio = this.radioRefMale.current!.checked ? 'male' : 'female';
     const newForm: Forms = {
@@ -107,11 +88,11 @@ class Form extends Component<object, FormState> {
       this.setState({
         isSubmited: false,
       });
-    }, 3500);
+    }, 3700);
   }
 
   render() {
-    const { isValidPhone, isValidName } = this.state;
+    const { isValidPhone, isValidName, forms } = this.state;
     return (
       <>
         {this.state.isSubmited && (
@@ -201,17 +182,7 @@ class Form extends Component<object, FormState> {
           </div>
         </form>
         <div className="info_cards">
-          {this.state.forms.map((el, index) => (
-            <div className="info_card-item" key={index}>
-              <p>Name: {el.name}</p>
-              <p>Phone: {el.phone}</p>
-              <p>Birthday: {el.date}</p>
-              <p>Payment method: {el.select}</p>
-              <p>Delivery: {el.checkbox ? 'need delivery' : 'without delivery'}</p>
-              <p>Gender: {el.gender}</p>
-              <p>Ava: {el.file}</p>
-            </div>
-          ))}
+          <FormsList forms={forms} />
         </div>
       </>
     );

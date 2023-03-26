@@ -41,7 +41,7 @@ test('invalid phone value', () => {
   render(<Form />);
   const phoneInput = screen.getByPlaceholderText('+*********');
   const submitButton = screen.getByRole('button');
-  fireEvent.change(phoneInput, { target: { value: '123456789' } });
+  fireEvent.change(phoneInput, { target: { value: '7234567899899' } });
   fireEvent.click(submitButton);
   const errorMessage = screen.queryByText('Invalid value');
   if (errorMessage) {
