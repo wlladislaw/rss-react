@@ -1,36 +1,17 @@
-import React, { Component, FormEvent, RefObject } from 'react';
+import {  FormEvent, useState } from 'react';
+import { useForm, useFormState } from 'react-hook-form';
 import { Forms, FormState } from '../../types';
 import FormsList from '../FormsList/FormsList';
 import './Form.scss';
 
-class Form extends Component<object, FormState> {
-  private nameInput: RefObject<HTMLInputElement>;
-  private phoneInput: RefObject<HTMLInputElement>;
-  private dateInput: RefObject<HTMLInputElement>;
-  private selectInput: RefObject<HTMLSelectElement>;
-  private checkboxInput: RefObject<HTMLInputElement>;
-  private radioRefMale: RefObject<HTMLInputElement>;
-  private fileInput: RefObject<HTMLInputElement>;
+const Form = () => {
+const {register,handleSubmit, reset } = useForm();
 
-  constructor(props: object) {
-    super(props);
+const [forms, setForms] = useState<Forms[]>([]);
+const [isSubmitted, setIsSubmitted] = useState(false);
+const [isValidPhone, setIsValidPhone] = useState(true);
+const [isValidName, setIsValidName] = useState(true);
 
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.nameInput = React.createRef<HTMLInputElement>();
-    this.phoneInput = React.createRef<HTMLInputElement>();
-    this.dateInput = React.createRef<HTMLInputElement>();
-    this.selectInput = React.createRef<HTMLSelectElement>();
-    this.checkboxInput = React.createRef<HTMLInputElement>();
-    this.radioRefMale = React.createRef<HTMLInputElement>();
-    this.fileInput = React.createRef<HTMLInputElement>();
-
-    this.state = {
-      forms: [],
-      isSubmited: false,
-      isValidPhone: true,
-      isValidName: true,
-    };
-  }
 
   handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -43,17 +24,13 @@ class Form extends Component<object, FormState> {
       const onlyLettersRegex = /^\s*[a-z-а-яё]+(?:\s+[a-z-а-яё]+){1,2}\s*$/i;
       if (name.charAt(0) !== name.charAt(0).toUpperCase() || !onlyLettersRegex.test(name)) {
         isValidName = false;
-        this.setState({
-          isValidName: false,
-        });
+        setIsValidName(false);
       }
       const phoneRegex =
         /(\+)[- _]*\(?[- _]*(\d{3}[- _]*\)?([- _]*\d){7}|\d\d[- _]*\d\d[- _]*\)?([- _]*\d){6})/g;
       const isValidPhone = phoneRegex.test(phone);
 
-      this.setState({
-        isValidPhone: isValidPhone,
-      });
+      setIsValidPhone(isValidPhone);
 
       return isValidName && isValidPhone;
     };
@@ -91,16 +68,14 @@ class Form extends Component<object, FormState> {
     }, 3700);
   }
 
-  render() {
-    const { isValidPhone, isValidName, forms } = this.state;
     return (
       <>
-        {this.state.isSubmited && (
+        {isSubmitted && (
           <div className="confirmation_message">
             <h2>Data has been saved! Thanks for order!</h2>
           </div>
         )}
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={handleSubmit}>
           <div className="form_container">
             <div className="form_info">
               <h3>Information</h3>
@@ -108,7 +83,7 @@ class Form extends Component<object, FormState> {
                 Your name
                 <input
                   id="name"
-                  ref={this.nameInput}
+                  {...register('name', { required: true })}
                   name="name"
                   type="text"
                   placeholder="Name and Last name"
@@ -187,6 +162,5 @@ class Form extends Component<object, FormState> {
       </>
     );
   }
-}
 
 export default Form;
