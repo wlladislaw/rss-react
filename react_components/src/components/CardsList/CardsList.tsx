@@ -1,16 +1,15 @@
-import React from 'react';
 import Card from '../Card/Card';
 import './Cards.scss';
 import { data } from '../../data';
-class Cards extends React.Component {
-  state = {
-    data: data,
-  };
+import { useEffect, useState } from 'react';
 
-  componentDidMount() {
+const Cards = () => {
+  const [cards, setData] = useState(data);
+
+  useEffect(() => {
     const inputStorage = localStorage.getItem('inputValue');
 
-    const filtered = data.filter((el) => {
+    const filtered = cards.filter((el) => {
       if (inputStorage !== null)
         return (
           el.title.toLowerCase().includes(inputStorage.toLowerCase()) ||
@@ -19,18 +18,16 @@ class Cards extends React.Component {
           el.category.toLowerCase().includes(inputStorage.toLowerCase())
         );
     });
-    this.setState({ data: filtered });
-  }
+    setData(filtered);
+  }, []);
 
-  render() {
-    return (
-      <div data-testid="list" className="cards_container">
-        {this.state.data.map((el) => (
-          <Card key={el.id} card={el} />
-        ))}
-      </div>
-    );
-  }
-}
+  return (
+    <div data-testid="list" className="cards_container">
+      {cards.map((el) => (
+        <Card key={el.id} card={el} />
+      ))}
+    </div>
+  );
+};
 
 export default Cards;

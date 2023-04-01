@@ -1,20 +1,17 @@
-import { FormEvent, useState } from 'react';
-import { useForm, useFormState } from 'react-hook-form';
-import { Forms, FormState } from '../../types';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { Forms } from '../../types';
 import FormsList from '../FormsList/FormsList';
 import './Form.scss';
 
 const Form = () => {
-  const { register, handleSubmit, reset } = useForm();
-
+  const { register, handleSubmit, reset } = useForm<Forms>();
   const [forms, setForms] = useState<Forms[]>([]);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isValidPhone, setIsValidPhone] = useState(true);
   const [isValidName, setIsValidName] = useState(true);
 
-  function onSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-
+  function onSubmit(data: Forms) {
     const validate = (name: string, phone: string) => {
       let isValidName;
       const minNameLength = 2;
@@ -28,37 +25,32 @@ const Form = () => {
       const phoneRegex =
         /(\+)[- _]*\(?[- _]*(\d{3}[- _]*\)?([- _]*\d){7}|\d\d[- _]*\d\d[- _]*\)?([- _]*\d){6})/g;
       const isValidPhone = phoneRegex.test(phone);
-
       setIsValidPhone(isValidPhone);
 
       return isValidName && isValidPhone;
     };
 
-    const nameInputValue = this.nameInput.current!.value;
-    const phoneInputValue = this.phoneInput.current!.value;
-
-    if (!validate(nameInputValue, phoneInputValue)) {
+    const { name, phone, date, select, checkbox } = data;
+    if (!validate(name, phone)) {
       return null;
     }
 
-    const selectedRadio = this.radioRefMale.current!.checked ? 'male' : 'female';
+    const selectedRadio = data.gender === 'male' ? 'male' : 'female';
     const newForm: Forms = {
-      name: nameInputValue,
-      phone: phoneInputValue,
-      date: this.dateInput.current!.value,
-      select: this.selectInput.current!.value,
-      checkbox: this.checkboxInput.current!.checked,
+      name,
+      phone,
+      date,
+      select,
+      checkbox,
       gender: selectedRadio,
-      file: this.fileInput.current!.value,
+      file: data.file[0],
     };
-    this.setState((prevState) => ({
-      forms: [...prevState.forms, newForm],
-      isSubmited: true,
-      isValidPhone: true,
-      isValidName: true,
-    }));
+    setForms((prevState) => [...prevState, newForm]);
+    setIsSubmitted(true);
+    setIsValidPhone(true);
+    setIsValidName(true);
 
-    event.currentTarget.reset();
+    reset();
 
     setTimeout(() => {
       setIsSubmitted(false);
@@ -112,7 +104,7 @@ const Form = () => {
             </label>
             <br />
             <label htmlFor="payment">Choose a payment method </label>
-            <select {...register('payment', { required: true })} name="payment">
+            <select {...register('select', { required: true })} name="payment">
               <option value="cash">Cash</option>
               <option value="online">Online</option>
               <option value="crypto">Crypto</option>
@@ -120,7 +112,7 @@ const Form = () => {
             <br />
             <label>
               Delivery
-              <input type="checkbox" {...register('delivery')} />
+              <input type="checkbox" {...register('checkbox')} />
             </label>
 
             <div className="switch_field">
@@ -138,13 +130,7 @@ const Form = () => {
             </div>
             <div id="file_upload-container">
               <label>
-                <input
-                  type="file"
-                  name="file"
-                  {...register('file')}
-                  id="upload_file"
-                  accept="image/*"
-                />
+                <input type="file" {...register('file')} id="upload_file" accept="image/*" />
                 <span>Upload avatar</span>
               </label>
             </div>
