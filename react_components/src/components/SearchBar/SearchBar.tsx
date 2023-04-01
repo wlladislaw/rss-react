@@ -1,48 +1,34 @@
-import React from 'react';
-interface SearchBarProps {
+import React, { useEffect, useState } from 'react';
+
+interface Props {
   prop: string;
 }
-interface SearchBarState {
-  input: string;
-}
 
-class SearchBar extends React.Component<SearchBarProps, SearchBarState> {
-  constructor(props: SearchBarProps) {
-    super(props);
-    this.state = {
-      input: '',
-    };
-  }
-  handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ input: event.target.value });
-    localStorage.setItem('inputValue', event.target.value);
+const SearchBar: React.FC<Props> = () => {
+  const [input, setInput] = useState<string>(() => localStorage.getItem('inputValue') || '');
+
+  useEffect(() => {
+    localStorage.setItem('inputValue', input);
+  }, [input]);
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInput(event.target.value);
   };
 
-  componentDidMount() {
-    const inputStorage = localStorage.getItem('inputValue');
-    if (inputStorage) {
-      this.setState({ input: inputStorage });
-    }
-  }
+  return (
+    <div className="search_bar">
+      <form>
+        <input
+          type="text"
+          value={input}
+          onChange={handleInputChange}
+          placeholder="Write here to search!"
+        />
+        <button>Search</button>
+      </form>
+      <div>{input}</div>
+    </div>
+  );
+};
 
-  componentWillUnmount(): void {
-    if (this.state.input) localStorage.setItem('inputValue', this.state.input);
-  }
-  render() {
-    return (
-      <div className="search_bar">
-        <form>
-          <input
-            type="text"
-            value={this.state.input}
-            onChange={this.handleInputChange}
-            placeholder="Write here to search!"
-          />
-          <button>Search</button>
-        </form>
-        <div>{this.state.input}</div>
-      </div>
-    );
-  }
-}
 export default SearchBar;

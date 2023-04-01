@@ -1,33 +1,40 @@
+import React, { useEffect, useState } from 'react';
 import Card from '../Card/Card';
 import './Cards.scss';
 import { data } from '../../data';
-import { useEffect, useState } from 'react';
 
-const Cards = () => {
-  const [cards, setData] = useState(data);
+function Cards() {
+  const [cards, setCards] = useState(data);
+  const [inputValue, setInputValue] = useState('');
 
   useEffect(() => {
-    const inputStorage = localStorage.getItem('inputValue');
-
-    const filtered = cards.filter((el) => {
-      if (inputStorage !== null)
-        return (
-          el.title.toLowerCase().includes(inputStorage.toLowerCase()) ||
-          el.description.toLowerCase().includes(inputStorage.toLowerCase()) ||
-          el.price == +inputStorage ||
-          el.category.toLowerCase().includes(inputStorage.toLowerCase())
-        );
-    });
-    setData(filtered);
+    const inputStorage = localStorage.getItem('inputValue') || '';
+    setInputValue(inputStorage.toLowerCase());
   }, []);
+
+  useEffect(() => {
+    const filtered = data.filter((card) => {
+      const title = card.title.toLowerCase();
+      const description = card.description.toLowerCase();
+      const category = card.category.toLowerCase();
+      const price = card.price.toString();
+      return (
+        title.includes(inputValue) ||
+        description.includes(inputValue) ||
+        category.includes(inputValue) ||
+        price.includes(inputValue)
+      );
+    });
+    setCards(filtered);
+  }, [inputValue]);
 
   return (
     <div data-testid="list" className="cards_container">
-      {cards.map((el) => (
-        <Card key={el.id} card={el} />
+      {cards.map((card) => (
+        <Card key={card.id} card={card} />
       ))}
     </div>
   );
-};
+}
 
 export default Cards;
