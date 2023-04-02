@@ -43,7 +43,7 @@ const Form = () => {
       select,
       checkbox,
       gender: selectedRadio,
-      file: data.file[0],
+      file: data.file[0] ? URL.createObjectURL(data.file[0] as unknown as File) : '',
     };
     setForms((prevState) => [...prevState, newForm]);
     setIsSubmitted(true);

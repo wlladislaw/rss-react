@@ -11,13 +11,14 @@
     color: rgb(6, 0, 12);
   }
 
-  input[type=text],
-  input[type=email],
-  :focus {
-    background-color: rgb(212, 176, 176);
+  input {
+    border-radius: 10px;
+    color: #010513;
+    background-color: rgb(211, 207, 207);
   }
 
   select {
+    color: #0f061a;
     width: 100%;
     width: 100px;
     padding: 6px 1px;
@@ -35,7 +36,7 @@
     margin: 20px;
     border: #f1f1f1 solid 2px;
     width: 300px;
-    overflow-x:hidden;
+    overflow-x: hidden;
   }
 
 }

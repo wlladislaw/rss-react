@@ -18,7 +18,7 @@ export default function FormsList(props: FormsListProps) {
           <p>Payment method: {el.select}</p>
           <p>Delivery: {el.checkbox ? 'need delivery' : 'without delivery'}</p>
           <p>Gender: {el.gender}</p>
-          <p>Ava: {el.file}</p>
+          <img className="formImg" src={el.file} alt={el.name} />
         </div>
       ))}
     </div>

@@ -4,7 +4,7 @@ import SearchBar from '../SearchBar/SearchBar';
 export default function MainPage() {
   return (
     <div className="App">
-      <SearchBar prop={''} />
+      <SearchBar />
       <Cards />
     </div>
   );

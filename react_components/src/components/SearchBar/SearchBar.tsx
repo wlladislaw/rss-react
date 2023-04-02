@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-interface Props {
-  prop: string;
-}
-
-const SearchBar: React.FC<Props> = () => {
+const SearchBar = () => {
   const [input, setInput] = useState<string>(() => localStorage.getItem('inputValue') || '');
 
   useEffect(() => {
