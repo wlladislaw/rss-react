@@ -16,7 +16,6 @@ class SearchBar extends React.Component<SearchBarProps, SearchBarState> {
   handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ input: event.target.value });
     localStorage.setItem('inputValue', event.target.value);
-    console.log(this.state.input);
   };
 
   componentDidMount() {
