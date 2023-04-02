@@ -1,0 +1,21 @@
+form {
+  width: 400px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+
+  button {
+    color: aliceblue;
+  }
+
+  input {
+    margin: 20px;
+    padding: 4px 10px;
+    border: 0;
+    font-size: 26px;
+  }
+
+  .search_bar {
+    width: 75%;
+  }
+}

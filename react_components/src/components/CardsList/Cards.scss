@@ -1,0 +1,46 @@
+.cards_container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 20px;
+}
+
+.card {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+
+  .card_info {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+  }
+
+  .card_image {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+
+  }
+
+  .description_card {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+
+    :last-child {
+      margin-top: 20px;
+    }
+  }
+
+  .card_more {
+    margin-top: 10px;
+    width: 18px;
+    padding: 6px 9px;
+    background: #006DFE;
+
+    color: #fff;
+    font-size: 12px;
+    margin: auto 0 0 0;
+  }
+}
