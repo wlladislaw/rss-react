@@ -1,13 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 const SearchBar = () => {
-  const [input, setInput] = useState<string>(() => localStorage.getItem('inputValue') || '');
+  const [input, setInput] = useState<string>(localStorage.getItem('inputValue') || '');
+  const inputRef = useRef('');
 
   useEffect(() => {
-    localStorage.setItem('inputValue', input);
+    inputRef.current = input;
   }, [input]);
+  useEffect(() => {
+    return () => localStorage.setItem('inputValue', inputRef.current);
+  }, []);
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    event.preventDefault();
     setInput(event.target.value);
   };
 
@@ -20,7 +25,7 @@ const SearchBar = () => {
           onChange={handleInputChange}
           placeholder="Write here to search!"
         />
-        <button>Search</button>
+        <button onClick={(e) => e.preventDefault()}>Search</button>
       </form>
       <div>{input}</div>
     </div>

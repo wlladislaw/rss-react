@@ -112,14 +112,14 @@ const Form = () => {
             <br />
             <label>
               Delivery
-              <input type="checkbox" {...register('checkbox')} />
+              <input type="checkbox" {...(register('checkbox'), { required: true })} />
             </label>
 
             <div className="switch_field">
               <span>Gender</span>
               <input
                 type="radio"
-                {...register('gender')}
+                {...(register('gender'), { required: true })}
                 name="switch"
                 value="male"
                 defaultChecked
