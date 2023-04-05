@@ -1,20 +1,16 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
-const SearchBar = ({handleSearch}) => {
-  const [input, setInput] = useState<string>('');
+const SearchBar = ({ handleSearch }) => {
+  // const [input, setInput] = useState<string>('');
 
-
+  // const handleKeyDown = (e) => {
+  //   if (e.key === 'Enter') handleSearch(input);
+  // };
 
   return (
     <div className="search_bar">
       <form>
-        <input
-          type="text"
-          value={input}
-          onChange={handleSearch}
-          placeholder="Write here to search!"
-        />
-        {/* <button onClick={(e) => e.preventDefault()}>Search</button> */}
+        <input type="text" placeholder="Write here to search!" onKeyDown={handleSearch} />
       </form>
     </div>
   );

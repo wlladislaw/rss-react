@@ -17,8 +17,8 @@ export default function Cards({ data }) {
 
   return (
     <div data-testid="list" className="cards_container">
-      {data.map((card) => (
-        <Card key={card.id} card={card} />
+      {data?.map((card, index) => (
+        <Card key={index} card={card} />
       ))}
     </div>
   );
