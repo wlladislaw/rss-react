@@ -7,8 +7,6 @@ export default function MainPage() {
   const [input, setInput] = useState<string>('people');
 
   const handleSearch = (event) => {
-    console.log('event: ', event);
-    console.log('event: ', event.target.value);
     if (event.key === 'Enter') {
       event.preventDefault();
       setInput(event.target.value);
@@ -20,6 +18,7 @@ export default function MainPage() {
     fetch(url)
       .then((response) => response.json())
       .then((data) => {
+        console.log('data: ', data);
         const dataPhotos = data?.photos.photo.map((pic) => {
           return `https://farm${pic.farm}.staticflickr.com/${pic.server}/${pic.id}_${pic.secret}.png`;
         });

@@ -9,38 +9,55 @@
   padding: 10px;
   text-align: center;
 
-  .card_info {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-
-  }
-
   .card_image {
     width: 250px;
     height: 200px;
     object-fit: cover;
+    cursor: grab;
+  }
+}
 
+.title_card {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.card_info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  display: flex;
+  position: fixed;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(46, 2, 2, 0.4);
+
+}
+
+.modal_content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  max-width: 80%;
+  overflow-y: auto;
+  text-align: center;
+
+  .closeImg {
+    position: relative;
+    left: 220px;
+    width: 50px;
   }
 
-  .description_card {
-    padding: 0;
-    margin: 0;
-    list-style: none;
-
-    :last-child {
-      margin-top: 20px;
-    }
-  }
-
-  .card_more {
-    margin-top: 10px;
-    width: 18px;
-    padding: 6px 9px;
-    background: #006DFE;
-
-    color: #fff;
-    font-size: 12px;
-    margin: auto 0 0 0;
+  .close:hover {
+    cursor: pointer;
   }
 }
