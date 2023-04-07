@@ -15,16 +15,34 @@ export interface Forms {
   file: string;
 }
 
-export interface Data {
-  id: number;
+export interface CardPic {
+  id: string;
+  image: string;
   title: string;
-  description: string;
-  price: number;
-  discountPercentage: number;
-  rating: number;
-  stock: number;
-  brand: string;
-  category: string;
-  thumbnail: string;
-  images: string[];
+  owner: string;
+  server: string;
 }
+
+export interface Photo {
+  id: string;
+  owner: string;
+  secret: string;
+  server: string;
+  farm: string;
+  title: string;
+}
+
+export interface Photos {
+  page: string;
+  pages: string;
+  perpage: string;
+  total: string;
+  photo: Photo[];
+}
+export interface DataApi {
+  photos: Photos;
+}
+
+export type CardsProps = {
+  cards: CardPic[];
+};

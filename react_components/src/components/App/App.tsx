@@ -1,4 +1,3 @@
-import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import NotFound from '../NotFound/NotFound';
 import AboutUs from '../About/AboutUs';

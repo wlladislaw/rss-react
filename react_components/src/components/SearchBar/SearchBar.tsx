@@ -1,4 +1,9 @@
-const SearchBar = ({ handleSearch }) => {
+import React from 'react';
+
+interface SearchBarProps {
+  handleSearch: (event: React.KeyboardEvent<HTMLInputElement>) => void;
+}
+const SearchBar = ({ handleSearch }: SearchBarProps) => {
   return (
     <div className="search_bar">
       <form>
