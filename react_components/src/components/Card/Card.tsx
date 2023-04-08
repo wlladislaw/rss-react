@@ -36,7 +36,7 @@ const Card = ({ card }: CardProps) => {
       <div className="card">
         <p className="title_card">{card.title}</p>
         <div className="card_info">
-          <img src={card.image} className="card_image" alt="card" onClick={handleImageClick} />
+          <img src={card.image} className="card_image" alt="image" onClick={handleImageClick} />
         </div>
       </div>
 
