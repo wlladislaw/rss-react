@@ -1,14 +1,12 @@
 import { useEffect, useState } from 'react';
-import Cards from '../CardsList/CardsList';
 import SearchBar from '../SearchBar/SearchBar';
 import { CardPic, Photo, DataApi } from '../../types';
-
-// import preloader from '../../assets/preloader.gif';
-
+import CardsList from '../CardsList/CardsList';
 export default function MainPage() {
   const [cards, setCards] = useState<CardPic[]>([]);
   const [input, setInput] = useState<string>('people');
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleSearch = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
@@ -18,8 +16,9 @@ export default function MainPage() {
   };
 
   useEffect(() => {
-    const API_KEY = 'f8e8c8e39de193f01618299b61e622ea';
-    const url = `https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${API_KEY}&text=${input}&format=json&nojsoncallback=1`;
+    const url = `https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${
+      import.meta.env.VITE_API_KEY
+    }&text=${input}&format=json&nojsoncallback=1`;
 
     setIsLoading(true);
     fetch(url)
@@ -37,8 +36,8 @@ export default function MainPage() {
         setCards(cards);
         setIsLoading(false);
       })
-      .catch((err) => {
-        console.error(err);
+      .catch(() => {
+        setError('Error fetching images');
         setIsLoading(false);
       });
   }, [input]);
@@ -46,6 +45,7 @@ export default function MainPage() {
   return (
     <div className="App">
       <SearchBar handleSearch={handleSearch} />
+      {error && <h3>{error}</h3>}
       {isLoading ? (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <iframe
@@ -57,7 +57,7 @@ export default function MainPage() {
           ></iframe>
         </div>
       ) : (
-        <Cards cards={cards} />
+        <CardsList cards={cards} />
       )}
     </div>
   );

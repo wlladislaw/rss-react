@@ -14,6 +14,7 @@ const Card = ({ card }: CardProps) => {
     return () => {
       document.removeEventListener('mousedown', clickOutside);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const clickOutside = (event: MouseEvent) => {
