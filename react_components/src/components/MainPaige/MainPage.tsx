@@ -16,9 +16,7 @@ export default function MainPage() {
   };
 
   useEffect(() => {
-    const url = `https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${
-      import.meta.env.VITE_API_KEY
-    }&text=${input}&format=json&nojsoncallback=1`;
+    const url = `https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=f8e8c8e39de193f01618299b61e622ea&text=${input}&format=json&nojsoncallback=1`;
 
     setIsLoading(true);
     fetch(url)

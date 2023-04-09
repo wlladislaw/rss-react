@@ -19,11 +19,4 @@ describe('SearchBar', () => {
     input.focus();
     expect(input).toHaveFocus();
   });
-  // it('calls handleSearch function when a key is pressed', () => {
-  //   const mockHandleSearch = jest.fn();
-  //   render(<SearchBar handleSearch={mockHandleSearch} />);
-  //   const input = screen.getByPlaceholderText('Write here to search!');
-  //   fireEvent.keyDown(input, { key: 'Enter', code: 'Enter' });
-  //   expect(mockHandleSearch).toHaveBeenCalledTimes(1);
-  // });
 });
