@@ -18,7 +18,6 @@ const Card = ({ card }: CardProps) => {
   }, []);
 
   const clickOutside = (event: MouseEvent) => {
-    console.log('event: ', event.target);
     if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
       closeModal();
     }

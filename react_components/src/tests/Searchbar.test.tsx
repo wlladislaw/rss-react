@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import SearchBar from '../components/SearchBar/SearchBar';
 
 describe('SearchBar', () => {
