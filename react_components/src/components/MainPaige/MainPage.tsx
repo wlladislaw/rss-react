@@ -2,7 +2,11 @@ import { useEffect, useState } from 'react';
 import SearchBar from '../SearchBar/SearchBar';
 import { CardPic, Photo, DataApi } from '../../types';
 import CardsList from '../CardsList/CardsList';
+import { useDispatch, useSelector } from 'react-redux';
 export default function MainPage() {
+  const dispatch = useDispatch();
+  const inputValue = useSelector((state) => state.searchInput.value);
+
   const [cards, setCards] = useState<CardPic[]>([]);
   const [input, setInput] = useState<string>('people');
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -11,6 +15,7 @@ export default function MainPage() {
   const handleSearch = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
       event.preventDefault();
+      //dispatch({type: 'CHANGE_INPUT_VALUE`, payload: e.target.value})
       setInput(event.currentTarget.value);
     }
   };
