@@ -9,7 +9,7 @@ export const fetchPhotos = () => async (dispatch: AppDispatch) => {
     dispatch(photosSlice.actions.photosFetching());
 
     const res = await axios.get<Photo[]>(
-      `https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=fi8e8c8e39de193f01618299b61e622ea&text=${input}&format=json&nojsoncallback=1`
+      `https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=f8e8c8e39de193f01618299b61e622ea&text=${input}&format=json&nojsoncallback=1`
     );
     dispatch(photosSlice.actions.photosFetchingSuccess(res.data));
   } catch (e) {

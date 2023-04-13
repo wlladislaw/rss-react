@@ -1,10 +1,10 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import counterReducer from './slice';
-// import serchInputReducer from './searchInpytSlice';
 import photosReducer from './reducers/DataPhotosSlice';
+import { photosAPI } from '../services/PhotosService';
 
 const rootReducer = combineReducers({
   photosReducer,
+  [photosAPI.reducerPath]: photosAPI.reducer,
 });
 
 // export default configureStore({
@@ -18,6 +18,7 @@ const rootReducer = combineReducers({
 export const setupStore = () => {
   return configureStore({
     reducer: rootReducer,
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(photosAPI.middleware),
   });
 };
 
