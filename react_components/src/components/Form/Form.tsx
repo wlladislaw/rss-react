@@ -3,13 +3,17 @@ import { useForm } from 'react-hook-form';
 import { Forms } from '../../types';
 import FormsList from '../FormsList/FormsList';
 import './Form.scss';
+import { useAppDispatch } from '../../hooks/redux';
+import { submittedFormsSlice } from '../../redux/reducers/SubmittedFormsSlice';
 
 const Form = () => {
   const { register, handleSubmit, reset } = useForm<Forms>();
-  const [forms, setForms] = useState<Forms[]>([]);
+  //const [forms, setForms] = useState<Forms[]>([]);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isValidPhone, setIsValidPhone] = useState(true);
   const [isValidName, setIsValidName] = useState(true);
+  const dispatch = useAppDispatch();
+  const { addForm } = submittedFormsSlice.actions;
 
   function onSubmit(data: Forms) {
     const validate = (name: string, phone: string) => {
@@ -45,7 +49,8 @@ const Form = () => {
       gender: selectedRadio,
       file: data.file[0] ? URL.createObjectURL(data.file[0] as unknown as File) : '',
     };
-    setForms((prevState) => [...prevState, newForm]);
+    // setForms((prevState) => [...prevState, newForm]);
+    dispatch(addForm(newForm));
     setIsSubmitted(true);
     setIsValidPhone(true);
     setIsValidName(true);
@@ -140,7 +145,7 @@ const Form = () => {
         </div>
       </form>
       <div className="info_cards">
-        <FormsList forms={forms} />
+        <FormsList />
       </div>
     </>
   );

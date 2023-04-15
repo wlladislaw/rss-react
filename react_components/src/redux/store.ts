@@ -1,3 +1,4 @@
+import submittedFormsSlice from './reducers/SubmittedFormsSlice';
 import searchInputReducer from './reducers/searchInputSlice';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import photosReducer from './reducers/DataPhotosSlice';
@@ -6,6 +7,7 @@ import { photosAPI } from '../services/PhotosService';
 const rootReducer = combineReducers({
   photosReducer,
   searchInputReducer,
+  submittedFormsSlice,
   [photosAPI.reducerPath]: photosAPI.reducer,
 });
 
