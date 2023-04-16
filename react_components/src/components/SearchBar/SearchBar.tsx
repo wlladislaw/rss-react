@@ -1,10 +1,7 @@
 import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { searchInputSlice } from '../../redux/reducers/searchInputSlice';
+import { searchInputSlice } from '../../redux/reducers/SearchInputSlice';
 
-// interface SearchBarProps {
-//   handleSearch: (event: React.KeyboardEvent<HTMLInputElement>) => void;
-// }
 const SearchBar = () => {
   const { inputValue } = useAppSelector((state) => state.searchInputReducer);
   const dispatch = useAppDispatch();
@@ -13,7 +10,6 @@ const SearchBar = () => {
     if (event.key === 'Enter') {
       event.preventDefault();
       dispatch(changeInput(event.currentTarget.value));
-      // setInput(event.currentTarget.value);
     }
   };
   return (
@@ -21,8 +17,8 @@ const SearchBar = () => {
       <form>
         <input
           type="text"
-          // value={inputValue}
-          placeholder="Write here to search!"
+          defaultValue={inputValue}
+          placeholder="people"
           onKeyDown={handleSearch}
         />
       </form>

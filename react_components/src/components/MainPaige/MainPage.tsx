@@ -2,16 +2,12 @@ import SearchBar from '../SearchBar/SearchBar';
 import { Photo } from '../../types';
 import CardsList from '../CardsList/CardsList';
 import { photosAPI } from '../../services/PhotosService';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { searchInputSlice } from '../../redux/reducers/searchInputSlice';
+import { useAppSelector } from '../../hooks/redux';
+
 export default function MainPage() {
-  // const [input, setInput] = useState<string>('people');
   const { inputValue } = useAppSelector((state) => state.searchInputReducer);
   const { data: photos, error, isLoading } = photosAPI.useFetchAllPhotosQuery(inputValue);
 
-  const dispatch = useAppDispatch();
-  const { changeInput } = searchInputSlice.actions;
-  //const [cards, setCards] = useState<CardPic[]>([]);
   const cards = photos?.photos.photo.map((el: Photo) => {
     return {
       id: el.id,
@@ -21,12 +17,11 @@ export default function MainPage() {
       server: el.server,
     };
   });
-  //setCards(cardsData);
 
   return (
     <div className="App">
       <SearchBar />
-      {isLoading && <div>Loading...</div>}
+      {isLoading && <h2>Loading...</h2>}
       {error && <h2> Failed fetching!</h2>}
       {cards && <CardsList cards={cards} />}
     </div>

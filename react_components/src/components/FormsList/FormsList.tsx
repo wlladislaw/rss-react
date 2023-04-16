@@ -1,12 +1,8 @@
 import { useAppSelector } from '../../hooks/redux';
-import { Forms } from '../../types';
 import './FormsList.scss';
-// interface FormsListProps {
-//   forms: Forms[];
-// }
 
 export default function FormsList() {
-  const { forms } = useAppSelector((state) => state.submittedFormsSlice);
+  const { forms } = useAppSelector((state) => state.submittedFormsReducer);
 
   return (
     <div className="formsList_container">

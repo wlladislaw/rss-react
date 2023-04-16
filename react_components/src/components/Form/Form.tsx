@@ -8,7 +8,6 @@ import { submittedFormsSlice } from '../../redux/reducers/SubmittedFormsSlice';
 
 const Form = () => {
   const { register, handleSubmit, reset } = useForm<Forms>();
-  //const [forms, setForms] = useState<Forms[]>([]);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isValidPhone, setIsValidPhone] = useState(true);
   const [isValidName, setIsValidName] = useState(true);
@@ -49,14 +48,11 @@ const Form = () => {
       gender: selectedRadio,
       file: data.file[0] ? URL.createObjectURL(data.file[0] as unknown as File) : '',
     };
-    // setForms((prevState) => [...prevState, newForm]);
     dispatch(addForm(newForm));
     setIsSubmitted(true);
     setIsValidPhone(true);
     setIsValidName(true);
-
     reset();
-
     setTimeout(() => {
       setIsSubmitted(false);
     }, 3700);
