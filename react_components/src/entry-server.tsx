@@ -1,12 +1,20 @@
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import App from './components/App/App';
+import { StaticRouter } from 'react-router-dom/server';
+import { Provider } from 'react-redux';
+import { setupStore } from './redux/store';
+const store = setupStore();
 
-export function render() {
+export function render(url, context) {
+  // const store = configureStore((state) => state, 2);
+  // let context = {};
   const html = ReactDOMServer.renderToString(
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
+    <Provider store={store}>
+      <StaticRouter location={url} context={context}>
+        <App />
+      </StaticRouter>
+    </Provider>
   );
   return { html };
 }
