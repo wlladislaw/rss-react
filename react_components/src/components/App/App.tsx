@@ -3,7 +3,7 @@ import NotFound from '../NotFound/NotFound';
 import AboutUs from '../About/AboutUs';
 import NavBar from '../NavBar/NavBar';
 import MainPage from '../MainPaige/MainPage';
-// import './App.scss';
+import './App.scss';
 import Form from '../Form/Form';
 
 export default function App() {
@@ -16,7 +16,6 @@ export default function App() {
         <Route path="/" element={<MainPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
-      <h1> Hello SSR ! </h1>
     </>
   );
 }

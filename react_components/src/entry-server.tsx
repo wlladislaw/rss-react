@@ -4,11 +4,10 @@ import App from './components/App/App';
 import { StaticRouter } from 'react-router-dom/server';
 import { Provider } from 'react-redux';
 import { setupStore } from './redux/store';
+
 const store = setupStore();
 
 export function render(url, context) {
-  // const store = configureStore((state) => state, 2);
-  // let context = {};
   const html = ReactDOMServer.renderToString(
     <Provider store={store}>
       <StaticRouter location={url} context={context}>
