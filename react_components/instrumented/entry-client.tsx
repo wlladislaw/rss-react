@@ -6,7 +6,6 @@ import './styles/index.scss';
 import { Provider } from 'react-redux';
 import { setupStore } from './redux/store';
 const store = setupStore();
-
 ReactDOM.hydrateRoot(
   document.getElementById('root') as HTMLElement,
   <Provider store={store}>
