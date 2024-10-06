@@ -1,48 +1,35 @@
-import React from 'react';
-interface SearchBarProps {
-  prop: string;
-}
-interface SearchBarState {
-  input: string;
-}
+import React, { useEffect, useRef, useState } from 'react';
 
-class SearchBar extends React.Component<SearchBarProps, SearchBarState> {
-  constructor(props: SearchBarProps) {
-    super(props);
-    this.state = {
-      input: '',
-    };
-  }
-  handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ input: event.target.value });
-    localStorage.setItem('inputValue', event.target.value);
+const SearchBar = () => {
+  const [input, setInput] = useState<string>(localStorage.getItem('inputValue') || '');
+  const inputRef = useRef('');
+
+  useEffect(() => {
+    inputRef.current = input;
+  }, [input]);
+  useEffect(() => {
+    return () => localStorage.setItem('inputValue', inputRef.current);
+  }, []);
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    event.preventDefault();
+    setInput(event.target.value);
   };
 
-  componentDidMount() {
-    const inputStorage = localStorage.getItem('inputValue');
-    if (inputStorage) {
-      this.setState({ input: inputStorage });
-    }
-  }
+  return (
+    <div className="search_bar">
+      <form>
+        <input
+          type="text"
+          value={input}
+          onChange={handleInputChange}
+          placeholder="Write here to search!"
+        />
+        <button onClick={(e) => e.preventDefault()}>Search</button>
+      </form>
+      <div>{input}</div>
+    </div>
+  );
+};
 
-  componentWillUnmount(): void {
-    if (this.state.input) localStorage.setItem('inputValue', this.state.input);
-  }
-  render() {
-    return (
-      <div className="search_bar">
-        <form>
-          <input
-            type="text"
-            value={this.state.input}
-            onChange={this.handleInputChange}
-            placeholder="Write here to search!"
-          />
-          <button>Search</button>
-        </form>
-        <div>{this.state.input}</div>
-      </div>
-    );
-  }
-}
 export default SearchBar;

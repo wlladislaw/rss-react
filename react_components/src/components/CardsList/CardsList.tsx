@@ -1,36 +1,44 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Card from '../Card/Card';
 import './Cards.scss';
 import { data } from '../../data';
-class Cards extends React.Component {
-  state = {
-    data: data,
-  };
 
-  componentDidMount() {
-    const inputStorage = localStorage.getItem('inputValue');
+import { Data } from '../../types';
 
-    const filtered = data.filter((el) => {
-      if (inputStorage !== null)
-        return (
-          el.title.toLowerCase().includes(inputStorage.toLowerCase()) ||
-          el.description.toLowerCase().includes(inputStorage.toLowerCase()) ||
-          el.price == +inputStorage ||
-          el.category.toLowerCase().includes(inputStorage.toLowerCase())
-        );
-    });
-    this.setState({ data: filtered });
-  }
-
-  render() {
+function filterCards(cards: Data[], inputValue: string) {
+  const input = inputValue.toLowerCase();
+  return cards.filter((card) => {
+    const title = card.title.toLowerCase();
+    const description = card.description.toLowerCase();
+    const category = card.category.toLowerCase();
+    const price = card.price.toString();
     return (
-      <div data-testid="list" className="cards_container">
-        {this.state.data.map((el) => (
-          <Card key={el.id} card={el} />
-        ))}
-      </div>
+      title.includes(input) ||
+      description.includes(input) ||
+      category.includes(input) ||
+      price.includes(input)
     );
-  }
+  });
 }
 
-export default Cards;
+export default function Cards() {
+  const [cards, setCards] = useState(data);
+  const [inputValue, setInputValue] = useState('');
+
+  useEffect(() => {
+    const storedValue = localStorage.getItem('inputValue') || '';
+    setInputValue(storedValue);
+  }, []);
+
+  useEffect(() => {
+    setCards(filterCards(data, inputValue));
+  }, [inputValue]);
+
+  return (
+    <div data-testid="list" className="cards_container">
+      {cards.map((card) => (
+        <Card key={card.id} card={card} />
+      ))}
+    </div>
+  );
+}
