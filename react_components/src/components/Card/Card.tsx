@@ -1,48 +1,61 @@
-import React from 'react';
-interface Data {
-  card: {
-    id: number;
-    title: string;
-    description: string;
-    price: number;
-    discountPercentage: number;
-    rating: number;
-    stock: number;
-    brand: string;
-    category: string;
-    thumbnail: string;
-    images: string[];
+import { useState, useRef, useEffect } from 'react';
+import CloseSvg from '../../assets/8542462_window_close_icon.svg';
+import { CardPic } from '../../types';
+type CardProps = {
+  card: CardPic;
+};
+
+const Card = ({ card }: CardProps) => {
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    document.addEventListener('mousedown', clickOutside);
+    return () => {
+      document.removeEventListener('mousedown', clickOutside);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const clickOutside = (event: MouseEvent) => {
+    if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+      closeModal();
+    }
   };
-}
-class Card extends React.Component<Data> {
-  render() {
-    const { card } = this.props;
-    return (
+
+  const handleImageClick = () => {
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
+  return (
+    <>
       <div className="card">
         <p className="title_card">{card.title}</p>
         <div className="card_info">
-          <img src={card.thumbnail} className="card_image" alt="image" />
-          <ul className="description_card">
-            <li>
-              <b>{`rating: ${card.rating}`}</b>
-            </li>
-            <li>
-              <b>{`count: ${card.stock}`}</b>
-            </li>
-            <li>
-              <b>{`brand: ${card.brand}`}</b>
-            </li>
-            <li>
-              <b>{` ${card.price} $`}</b>
-            </li>
-            <li>
-              <span className="card_more">SEE MORE</span>
-            </li>
-          </ul>
+          <img src={card.image} className="card_image" alt="image" onClick={handleImageClick} />
         </div>
       </div>
-    );
-  }
-}
+
+      {showModal && (
+        <div className="modal">
+          <div className="modal_content" ref={modalRef}>
+            <div className="close">
+              <img className="closeImg" src={CloseSvg} alt="close" onClick={closeModal} />
+            </div>
+            <h2>{card.title}</h2>
+            <img src={card.image} alt="card" />
+            <p>Id: {card.id}</p>
+            <p>Owner: {card.owner}</p>
+            <p>Server: {card.server}</p>
+          </div>
+        </div>
+      )}
+    </>
+  );
+};
 
 export default Card;

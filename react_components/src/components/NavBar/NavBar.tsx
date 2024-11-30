@@ -1,28 +1,23 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
-class NavBar extends React.Component {
-  render() {
-    return (
-      <div className="navbar">
-        <div className="navbar_main">
-          <Link to="/">
-            <h1>Main</h1>
-          </Link>
-        </div>
-        <div className="navbar_forms">
-          <Link to="/forms">
-            <h2>Forms</h2>
-          </Link>
-        </div>
-        <div className="navbar_aboutUs">
-          <Link to="/about_us">
-            <h2>About Us</h2>
-          </Link>
-        </div>
+export default function NavBar() {
+  return (
+    <div className="navbar">
+      <div className="navbar_main">
+        <NavLink to="/">
+          <h1>Main</h1>
+        </NavLink>
       </div>
-    );
-  }
+      <div className="navbar_forms">
+        <NavLink to="/forms">
+          <h2>Forms</h2>
+        </NavLink>
+      </div>
+      <div className="navbar_aboutUs">
+        <NavLink to="/about_us">
+          <h2>About Us</h2>
+        </NavLink>
+      </div>
+    </div>
+  );
 }
-
-export default NavBar;
